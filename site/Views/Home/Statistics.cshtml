@@ -1,0 +1,32 @@
+﻿@using site.Controllers
+@model HomeController.UserAnswers[]
+
+@{
+    ViewBag.Title = "Статистика";
+}
+
+<h2>Статистика</h2>
+<h3>Общая</h3>
+Всего предложений: @ViewBag.NumAll.
+<br />
+Предложений без ответов: @ViewBag.NumAnswered_0.
+<br />
+С одним ответом: @ViewBag.NumAnswered_1.
+<br />
+С двумя ответами: @ViewBag.NumAnswered_2.
+<br />
+С тремя ответами: @ViewBag.NumAnswered_3.
+<br />
+Помеченных как ошибочные: @ViewBag.NumWarnings.
+<h3>По пользователям</h3>
+<table class="table table-hover">
+    <thead><tr><th>Пользователь</th><th>Количество ответов</th></tr></thead>
+    <tbody>
+        @foreach (HomeController.UserAnswers u in Model)
+        {
+            <tr><td>@u.UserName</td><td>@u.NumAnswers</td></tr>
+        }
+    </tbody>
+</table>
+
+

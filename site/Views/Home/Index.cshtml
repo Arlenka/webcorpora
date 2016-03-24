@@ -1,0 +1,44 @@
+﻿@using site.Models
+@model Answer
+
+@{
+    ViewBag.Title = "Домашняя страница";
+}
+
+<h2>Исправление опечаток</h2>
+
+@if (ViewBag.Thanks == true)
+{
+    <h4>Спасибо за ответ! Вот еще одно предложение.</h4>
+}
+else
+{
+    <div class="lead" style="font-size: 16px">
+        Ниже дано предложение, в котором, возможно, присутствуют опечатки. Пожалуйста, исправьте их в поле ввода и нажмите "Отправить".
+        Если однозначно исправить невозможно (например, предложение обрывается), введите в поле ввода комментарий и нажмите "Затрудняюсь с ответом".
+        Настоятельно рекомендуем @Html.ActionLink("ознакомиться с инструкцией", "Instructions").
+    </div>
+
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { role = "form" }))
+{
+    <div class="form-group" style="position: relative">
+        @Html.HiddenFor(m => m.Task.ID)
+        <p class="form-control-static" style="word-wrap: break-word">@Model.Task.SentenceText</p>
+    </div>
+        <div class="form-group">
+            @Html.TextAreaFor(m => m.AnswerText, 5, 0, new { @class = "form-control", style = "width: 100%; max-width: 100%" })
+        </div>
+        <div class="form-group">
+            <input class="btn btn-default" type="submit" value="Отправить" name="action" />
+            <input class="btn btn-default" type="submit" value="Затрудняюсь с ответом" name="action" />
+        </div>
+}
+@Html.ActionLink("Я уже видел это предложение, дайте другое", "Index", new { firstTime = true })
+<br />
+<br />
+<b>Статистика по предложениям</b>
+<br />
+Вами размечено: @ViewBag.NumUserAnswers.
+<br />
+Доступно для разметки: @ViewBag.NumUserAvailableSentences.
